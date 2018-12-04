@@ -2,7 +2,7 @@ const express = require('express');
 const app = express(); 
 
 app.get('/' , (req,res) => {
-    res.send({hi: 'there'}); 
+    res.send({hi: 'hi hi there'}); 
 });
 
 const PORT = process.env.PORT || 5000;
@@ -29,5 +29,8 @@ other engineer who's looking at this in the future that this is some type of con
  to PORT . otherwise, by default, use the value of 5000. 
  dev env- 5000, production - whatever port heroku is attempting to provide to us. 
  app.listen(PORT)- when we decide what port to listen to, rather than always listening to 5000, we'll listen to the PORT that we just calculated on line 8.
+ 
+ Followup deployment: 
+redploy my app: save every single file, git status, 
 */
 
