@@ -31,6 +31,6 @@ other engineer who's looking at this in the future that this is some type of con
  app.listen(PORT)- when we decide what port to listen to, rather than always listening to 5000, we'll listen to the PORT that we just calculated on line 8.
  
  Followup deployment: 
-redploy my app: save every single file, git status, 
+redploy my app: save every single file, git status, git add . , git commit -m "..", git push heroku master!
 */
 
