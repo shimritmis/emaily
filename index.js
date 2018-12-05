@@ -1,12 +1,29 @@
 const express = require('express');
 const passport= require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('../config/keys'); 
 
 const app = express(); 
 
-passport.use(new GoogleStrategy(
+passport.use(new GoogleStrategy({
+    clientID : keys.googleClientID,
+    clientSecret: keys.googleClientSecret,
+    callbackURL: '/auth/google/callback'
 
-));
+}, 
+(accessToken) => {
+    console.log(accessToken);
+}));
+
+// Tell express to involve passport, in order to pass the user off to where they will then be kicked into the authentication flow:
+app.get(
+    '/auth/google',
+    passport.authenticate('google', 
+        {scope: ['profile', 'email']
+    }) 
+); //whenever user come to this route we want to kick them out into our outh-flow, which is being entirely manage by passport. so we are asking passport to attempt to authenticate the user who is coming in on
+// this route and use the strategy called 'google'. we had never explicitly said that the string 'google' is actually this GoogleStategy.  internally GoogleStrategy has some little bit of code that says I'm known as a 
+//strategy called Google like the string 'google' in which we are using right here after autenticate: passport.authenticate('google', ...
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
