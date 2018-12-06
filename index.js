@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose= require('mongoose');
 const keys=require('./config/keys'); 
-require('./services/passport'); 
+require('./models/User'); 
+require('./services/passport'); // the order of the require statemants is important! in the reverse order we'll get an error because it will appear that we're attempting to make use of the user model before we actually defined it!
 
 
 mongoose.connect(keys.mongoURI,  { useNewUrlParser: true });
