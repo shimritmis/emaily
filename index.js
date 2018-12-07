@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose= require('mongoose');
+const cookieSession = require('cookie-session');
+const passport = require ('passport'); 
 const keys=require('./config/keys'); 
 require('./models/User'); 
 require('./services/passport'); // the order of the require statemants is important! in the reverse order we'll get an error because it will appear that we're attempting to make use of the user model before we actually defined it!
@@ -8,6 +10,17 @@ require('./services/passport'); // the order of the require statemants is import
 mongoose.connect(keys.mongoURI,  { useNewUrlParser: true });
 
 const app = express(); 
+
+app.use(
+    cookieSession ({
+        maxAge: 30 * 24 * 60 * 60 * 1000, //30 days.
+        keys: [keys.cookieKey]
+    })
+);
+
+//tell passport that it should make use of cookies to handle authentication
+app.use(passport.initialize());
+app.use(passport.session()); 
 
 require('./routes/authRoutes')(app);  
 
