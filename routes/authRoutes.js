@@ -11,8 +11,15 @@ module.exports = (app) => {
     // this route and use the strategy called 'google'. we had never explicitly said that the string 'google' is actually this GoogleStategy.  internally GoogleStrategy has some little bit of code that says I'm known as a 
     //strategy called Google like the string 'google' in which we are using right here after autenticate: passport.authenticate('google', ...
     
-    app.get('/auth/google/callback', passport.authenticate('google')
-    );
+    app.get('/auth/google/callback', passport.authenticate('google'));
+    app.get('/api/logout', (req, res)=> {
+        req.logout(); // a func that is attached automatically to the request obj by passport. when we call logout it takes the cookie that contains our user's id and it kills the id that's in there.
+        // now the user is logged out and no longer have any id. 
+        res.send(req.user); //req.user is already destroyed by google, so we'll get an empty screen. 
+    });
+    app.get('/api/current_user', (req, res) => {
+        res.send(req.user);
+    });
 };
 
 
